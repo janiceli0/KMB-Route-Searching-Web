@@ -16,7 +16,7 @@ let uniqueNo = [];
 let routeNameList = [];
 search.addEventListener("click", function () {
   removeChoice();
-
+  removeList();
   const whitespaceRemoved = input.value.replace(/\s/g, "");
   input.value = whitespaceRemoved.toUpperCase();
   //First API
@@ -233,11 +233,11 @@ function removeChoice() {
   }
 }
 
-// function removeList() {
-//   const listItems = document.querySelectorAll("li.step");
-//   console.log("count: " + listItems.length);
+function removeList() {
+  const listItems = document.querySelectorAll("li.step");
+  console.log("count: " + listItems.length);
 
-//   listItems.forEach(function (listItem) {
-//     listItem.remove();
-//   });
-// }
+  listItems.forEach(function (listItem) {
+    listItem.remove();
+  });
+}
