@@ -67,17 +67,26 @@ input#route {
 }
 
 .choice {
-  background-color: #dcdcdc;
+  min-width: 130px;
+  height: 40px;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
   border-radius: 5px;
-  height: 35px;
+  border: 2px solid #495057;
+  background: #495057;
   min-width: 300px;
   margin-top: 15px;
   margin-right: 10px;
-  padding-left: 5px;
-  padding-right: 5px;
 }
 .choice:hover {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background: #fff;
+  color: #495057;
 }
 
 /* route info */
@@ -91,11 +100,13 @@ ul {
 }
 li {
   border-bottom: 1px solid rgb(188, 187, 187);
+  box-shadow: -1px 2px 5px 0px rgba(245, 226, 226, 1);
+  border-radius: 10px;
   width: 100%;
 }
 
 li:hover {
-  background-color: #f4f2f2;
+  background-color: #fff4f4;
 }
 
 .stopName {
@@ -183,6 +194,7 @@ img.arrow {
   width: 25px;
   height: 20px;
   transform: rotate(0deg);
+  margin-right: 10px;
 }
 
 /* loader */
