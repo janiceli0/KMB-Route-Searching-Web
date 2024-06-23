@@ -3,6 +3,7 @@ const input = document.querySelector("input#route");
 const search = document.querySelector("#searchBtn");
 const orderList = document.querySelector("ul");
 const coll = document.getElementsByClassName("collapsible");
+const loaderWrapper = document.querySelector(".loader-wrapper");
 
 const arrowSymbol = "\u2192";
 
@@ -13,7 +14,6 @@ let bound = "";
 let type = "";
 let uniqueNo = [];
 let routeNameList = [];
-
 search.addEventListener("click", function () {
   removeChoice();
 
@@ -33,8 +33,8 @@ search.addEventListener("click", function () {
     if (routeNo.includes(input.value) === false) {
       alert("請輸入正確路線～");
     }
-    //push route stat and endpoint
 
+    //push route stat and endpoint
     for (i = 0; i < dataRoute.data.length; i++) {
       if (input.value == dataRoute.data[i]["route"]) {
         const choiceDiv = document.querySelector("#routeChoice");
@@ -83,63 +83,70 @@ search.addEventListener("click", function () {
             uniqueNo.push(dataRouteId.data[h]["stop"]);
           }
         }
+
         console.log(uniqueNo);
+
         //Third API
         const fetchStopName = async (stopid) => {
           const res = await fetch(
             "https://data.etabus.gov.hk/v1/transport/kmb/stop/" + stopid
           );
           const dataRouteName = await res.json();
-          console.log(dataRouteName.data["name_tc"]);
 
-          const circleDiv = document.createElement("div");
-          circleDiv.classList.add("circle");
-          const paragraph = document.createElement("p");
-          circleDiv.append(paragraph);
+          loaderWrapper.style.display = "block";
+          setTimeout(function () {
+            console.log(dataRouteName.data["name_tc"]);
 
-          const stopNameSeq = document.createElement("button");
-          stopNameSeq.classList.add("stopList");
-          stopNameSeq.append(dataRouteName.data["name_tc"]);
+            const circleDiv = document.createElement("div");
+            circleDiv.classList.add("circle");
+            const paragraph = document.createElement("p");
+            circleDiv.append(paragraph);
 
-          const arrowSign = document.createElement("img");
-          arrowSign.classList.add("arrow");
-          arrowSign.setAttribute(
-            "src",
-            "https://cdn-icons-png.flaticon.com/512/5800/5800691.png"
-          );
+            const stopNameSeq = document.createElement("button");
+            stopNameSeq.classList.add("stopList");
+            stopNameSeq.append(dataRouteName.data["name_tc"]);
 
-          const firstDiv = document.createElement("div");
-          firstDiv.classList.add("stopName");
-          firstDiv.classList.add("collapsible");
-          firstDiv.append(circleDiv, stopNameSeq, arrowSign);
+            const arrowSign = document.createElement("img");
+            arrowSign.classList.add("arrow");
+            arrowSign.setAttribute(
+              "src",
+              "https://cdn-icons-png.flaticon.com/512/5800/5800691.png"
+            );
 
-          const list = document.createElement("li");
-          list.classList.add("step");
+            const firstDiv = document.createElement("div");
+            firstDiv.classList.add("stopName");
+            firstDiv.classList.add("collapsible");
+            firstDiv.append(circleDiv, stopNameSeq, arrowSign);
 
-          list.append(firstDiv);
-          orderList.append(list);
+            const list = document.createElement("li");
+            list.classList.add("step");
 
-          const secondDiv = document.createElement("div");
-          secondDiv.classList.add("content");
-          secondDiv.setAttribute("id", `${stopid}`);
-          list.append(secondDiv);
+            list.append(firstDiv);
+            orderList.append(list);
 
-          const thirdDiv = document.createElement("div");
-          thirdDiv.classList.add("icon");
-          const ring = document.createElement("img");
-          ring.setAttribute("id", "ringbell");
-          ring.setAttribute(
-            "src",
-            "https://cdn-icons-png.flaticon.com/512/1157/1157000.png"
-          );
-          const reset = document.createElement("img");
-          reset.setAttribute("id", "refresh");
-          reset.setAttribute(
-            "src",
-            "https://cdn-icons-png.flaticon.com/512/10729/10729013.png"
-          );
-          thirdDiv.append(ring, reset);
-          list.append(thirdDiv);
+            const secondDiv = document.createElement("div");
+            secondDiv.classList.add("content");
+            secondDiv.setAttribute("id", `${stopid}`);
+            list.append(secondDiv);
+
+            const thirdDiv = document.createElement("div");
+            thirdDiv.classList.add("icon");
+            const ring = document.createElement("img");
+            ring.setAttribute("id", "ringbell");
+            ring.setAttribute(
+              "src",
+              "https://cdn-icons-png.flaticon.com/512/1157/1157000.png"
+            );
+            const reset = document.createElement("img");
+            reset.setAttribute("id", "refresh");
+            reset.setAttribute(
+              "src",
+              "https://cdn-icons-png.flaticon.com/512/10729/10729013.png"
+            );
+            thirdDiv.append(ring, reset);
+            list.append(thirdDiv);
+            loaderWrapper.style.display = "none";
+          }, 1000);
 
           //collapsible
           for (let z = 0; z < coll.length; z++) {
@@ -191,7 +198,7 @@ search.addEventListener("click", function () {
                 );
               } else {
                 const spanElement = document.createElement("span");
-                spanElement.style.color = "red"; // Set the text color of the span element to red
+                spanElement.style.color = "red";
                 spanElement.textContent = "實時班次";
                 paragraph1.append(
                   dataRouteEta.data[p]["eta"].slice(11, 16) + " "
@@ -227,6 +234,10 @@ function removeChoice() {
 }
 
 // function removeList() {
-//   const listItem = document.querySelector("li.step");
-//   listItem.remove();
+//   const listItems = document.querySelectorAll("li.step");
+//   console.log("count: " + listItems.length);
+
+//   listItems.forEach(function (listItem) {
+//     listItem.remove();
+//   });
 // }
