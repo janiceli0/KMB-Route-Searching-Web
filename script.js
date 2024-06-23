@@ -93,60 +93,56 @@ search.addEventListener("click", function () {
           );
           const dataRouteName = await res.json();
 
-          loaderWrapper.style.display = "block";
-          setTimeout(function () {
-            console.log(dataRouteName.data["name_tc"]);
+          console.log(dataRouteName.data["name_tc"]);
 
-            const circleDiv = document.createElement("div");
-            circleDiv.classList.add("circle");
-            const paragraph = document.createElement("p");
-            circleDiv.append(paragraph);
+          const circleDiv = document.createElement("div");
+          circleDiv.classList.add("circle");
+          const paragraph = document.createElement("p");
+          circleDiv.append(paragraph);
 
-            const stopNameSeq = document.createElement("button");
-            stopNameSeq.classList.add("stopList");
-            stopNameSeq.append(dataRouteName.data["name_tc"]);
+          const stopNameSeq = document.createElement("button");
+          stopNameSeq.classList.add("stopList");
+          stopNameSeq.append(dataRouteName.data["name_tc"]);
 
-            const arrowSign = document.createElement("img");
-            arrowSign.classList.add("arrow");
-            arrowSign.setAttribute(
-              "src",
-              "https://cdn-icons-png.flaticon.com/512/5800/5800691.png"
-            );
+          const arrowSign = document.createElement("img");
+          arrowSign.classList.add("arrow");
+          arrowSign.setAttribute(
+            "src",
+            "https://cdn-icons-png.flaticon.com/512/5800/5800691.png"
+          );
 
-            const firstDiv = document.createElement("div");
-            firstDiv.classList.add("stopName");
-            firstDiv.classList.add("collapsible");
-            firstDiv.append(circleDiv, stopNameSeq, arrowSign);
+          const firstDiv = document.createElement("div");
+          firstDiv.classList.add("stopName");
+          firstDiv.classList.add("collapsible");
+          firstDiv.append(circleDiv, stopNameSeq, arrowSign);
 
-            const list = document.createElement("li");
-            list.classList.add("step");
+          const list = document.createElement("li");
+          list.classList.add("step");
 
-            list.append(firstDiv);
-            orderList.append(list);
+          list.append(firstDiv);
+          orderList.append(list);
 
-            const secondDiv = document.createElement("div");
-            secondDiv.classList.add("content");
-            secondDiv.setAttribute("id", `${stopid}`);
-            list.append(secondDiv);
+          const secondDiv = document.createElement("div");
+          secondDiv.classList.add("content");
+          secondDiv.setAttribute("id", `${stopid}`);
+          list.append(secondDiv);
 
-            const thirdDiv = document.createElement("div");
-            thirdDiv.classList.add("icon");
-            const ring = document.createElement("img");
-            ring.setAttribute("id", "ringbell");
-            ring.setAttribute(
-              "src",
-              "https://cdn-icons-png.flaticon.com/512/1157/1157000.png"
-            );
-            const reset = document.createElement("img");
-            reset.setAttribute("id", "refresh");
-            reset.setAttribute(
-              "src",
-              "https://cdn-icons-png.flaticon.com/512/10729/10729013.png"
-            );
-            thirdDiv.append(ring, reset);
-            list.append(thirdDiv);
-            loaderWrapper.style.display = "none";
-          }, 1000);
+          const thirdDiv = document.createElement("div");
+          thirdDiv.classList.add("icon");
+          const ring = document.createElement("img");
+          ring.setAttribute("id", "ringbell");
+          ring.setAttribute(
+            "src",
+            "https://cdn-icons-png.flaticon.com/512/1157/1157000.png"
+          );
+          const reset = document.createElement("img");
+          reset.setAttribute("id", "refresh");
+          reset.setAttribute(
+            "src",
+            "https://cdn-icons-png.flaticon.com/512/10729/10729013.png"
+          );
+          thirdDiv.append(ring, reset);
+          list.append(thirdDiv);
 
           //collapsible
           for (let z = 0; z < coll.length; z++) {
@@ -211,11 +207,14 @@ search.addEventListener("click", function () {
             }
           }
         };
-
-        for (y = 0; y < uniqueNo.length; y++) {
-          fetchStopName(uniqueNo[y]);
-          fetchStopEta(uniqueNo[y], input.value, type);
-        }
+        loaderWrapper.style.display = "block";
+        setTimeout(function () {
+          loaderWrapper.style.display = "none";
+          for (y = 0; y < uniqueNo.length; y++) {
+            fetchStopName(uniqueNo[y]);
+            fetchStopEta(uniqueNo[y], input.value, type);
+          }
+        }, 1000);
       };
 
       fetchInfo();
