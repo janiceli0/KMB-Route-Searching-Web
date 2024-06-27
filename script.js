@@ -268,8 +268,5 @@ function removeList() {
   console.log(stopLi.length);
   for (let i = 0; i < stopLi.length; i++) {
     console.log(stopLi[i]);
-    stopLi[0].remove();
-
-    console.log(stopLi[i]);
   }
 }
